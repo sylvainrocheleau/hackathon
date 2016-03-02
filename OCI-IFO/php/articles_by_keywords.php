@@ -7,13 +7,13 @@ try {
 	$collection = $db->articles;
     
 //Query to MongoDB
-//This query looks for a particular keyword in articles. "TransCanada" may be replaced by any keywords.
-	$articles = array(
-	'full_article' => array('$regex' => new MongoRegex("/^$TransCanada/i"))
-		);
-        
+//This query looks for a particular keyword in articles. "$search" may be replaced by any keywords.
+	$search = "Trudeau";
 	$json = array();
-    $articles = $collection->find($articles)->limit(1000);
+	$articles = array(
+	'full_article' => array('$regex' => new MongoRegex("/$search/i"))
+		);	
+    $articles = $collection->find($articles)->limit(100);
     foreach ($articles as $obj => $value) {
         $x = (array(
         $obj => $value
